@@ -7,8 +7,8 @@
     <ProjectGuid>{DB77D6B1-3FCD-44BE-9D72-6BC6E6A3FB64}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tx.Core</RootNamespace>
-    <AssemblyName>Tx.Core</AssemblyName>
+    <RootNamespace>Tx.HierarchicalTraveler</RootNamespace>
+    <AssemblyName>Tx.HierarchicalTraveler</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,7 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IHierarchical.cs" />
+    <Compile Include="Core\IAggregateAction.cs" />
+    <Compile Include="Core\IHierarchical.cs" />
+    <Compile Include="Core\IHierarchicalAction.cs" />
+    <Compile Include="Core\IIndividualAction.cs" />
+    <Compile Include="HierarchicalAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TxTraveler.cs" />
     <Compile Include="TxElement.cs" />

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Tx.HierarchicalTraveler.Core;
 
-namespace Tx.Core
+namespace Tx.HierarchicalTraveler
 {
     internal class TxElement<TSource> where TSource : IHierarchical
     {

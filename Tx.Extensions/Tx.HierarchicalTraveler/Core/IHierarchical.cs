@@ -1,4 +1,4 @@
-namespace Tx.Core
+namespace Tx.HierarchicalTraveler.Core
 {
     internal interface IHierarchical
     {

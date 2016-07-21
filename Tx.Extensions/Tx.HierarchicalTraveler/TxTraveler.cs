@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Tx.HierarchicalTraveler.Core;
 
-namespace Tx.Core
+namespace Tx.HierarchicalTraveler
 {
     internal class TxTraveler<T> where T : IHierarchical
     {
         private readonly IList<T> _map;
         public IList<TxElement<T>> Elements { get; }
 
+        private readonly IDictionary<HierarchicalActionType, ActionDescriptor<T>> _actions = new Dictionary<HierarchicalActionType, ActionDescriptor<T>>();
 
-        public TxTraveler(IList<T> hierarchical, HierarchicalAction<T> action)
+        public TxTraveler(IList<T> hierarchical, ActionDescriptor<T> action)
         {
             _map = hierarchical;
             Elements = new List<TxElement<T>>();
@@ -58,7 +59,7 @@ namespace Tx.Core
                 {
                     Traversal(child);
 
-                    var individual = (IIndividualAction<T>)_actions[HierarchicalActionType.Individual];
+                    var individual = _actions[HierarchicalActionType.Individual] as IIndividualAction<T>;
 
                     if (individual != null)
                     {
@@ -66,7 +67,7 @@ namespace Tx.Core
                     }
                 }
 
-                var aggregate = (IAggregateAction<T>)_actions[HierarchicalActionType.Aggregate];
+                var aggregate = _actions[HierarchicalActionType.Aggregate] as IAggregateAction<T>;
 
                 if (aggregate != null)
                 {
@@ -74,36 +75,6 @@ namespace Tx.Core
                 }
             }
         }
-
-        private readonly IDictionary<HierarchicalActionType, HierarchicalAction<T>> _actions = new Dictionary<HierarchicalActionType, HierarchicalAction<T>>();
-    }
-
-    internal abstract class HierarchicalAction<TTarget> where TTarget : IHierarchical
-    {
-        internal abstract Action<TxElement<TTarget>, TxElement<TTarget>> Action { get; }
-
-        public HierarchicalActionType ActionType { get; protected set; }
-
-    }
-
-    //internal class AggregateAction<TTarget> : HierarchicalAction<TTarget> where TTarget : IHierarchical
-    //{
-    //    internal override Action<TxElement<TTarget>, TxElement<TTarget>> Action { get; private set; }
-    //}
-
-    internal interface IAggregateAction<TTarget> : IHierarchicalAction where TTarget : IHierarchical
-    {
-        Action<TxElement<TTarget>, IList<TxElement<TTarget>>> Action { get; }
-    }
-
-    internal interface IHierarchicalAction
-    {
-
-    }
-
-    internal interface IIndividualAction<TTarget> : IHierarchicalAction where TTarget : IHierarchical
-    {
-        Action<TxElement<TTarget>, TxElement<TTarget>> Action { get; }
     }
 
     internal enum HierarchicalActionType
